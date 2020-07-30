@@ -1,14 +1,20 @@
-# Today I Learned by *[Nombre]*
+# Today I Learned by *Carlos Segura*
 
 Ruby and Rails official documentation reading personal journal
 
 ## Week 1
 
-### Mon 20, July 2020 *[Reading topic or title]*
-orem ipsum dolor sit amet consectetur adipiscing elit nulla consequat, taciti arcu volutpat mattis blandit primis natoque feugiat posuere, elementum curabitur mollis enim velit vulputate urna ut. Ultrices nisl nam nunc netus himenaeos magnis phasellus...
+### Thu 23, July 2020 *Development environment*
+I read chapter 1.1 Up and running and 1.1.1 Development environment from book *Ruby on Rails Tutorial*, I learned about adventages of Rails, I like the fact that Rails doesn't change fast, I also learned how to setup development environment in Cloud9, Cloud9 is part of AWS so develompment environment will run on browser
 
-### Tue 21, July 2020 *[Reading topic or title]*
-orem ipsum dolor sit amet consectetur adipiscing elit nulla consequat, taciti arcu volutpat mattis blandit primis natoque feugiat posuere, elementum curabitur mollis enim velit vulputate urna ut. Ultrices nisl nam nunc netus himenaeos magnis phasellus...
+### Fri 24, July 2020 *Installing Rails*
+I learned about how to install Rails, expecifically version 6.0.3.2, Rails is installed using gem command wich is the package manager for Ruby, I also read how to make a directory for Rails project and reviewed some Unix commands
 
-### Wed 21, July 2020 *[Reading topic or title]*
-orem ipsum dolor sit amet consectetur adipiscing elit nulla consequat, taciti arcu volutpat mattis blandit primis natoque feugiat posuere, elementum curabitur mollis enim velit vulputate urna ut. Ultrices nisl nam nunc netus himenaeos magnis phasellus...
+### Mon 27, July 2020 *The first application*
+I learned how to create a Rails project using the command rails new *app name* I also reviewed all directories created by the command and I found some similarities with Laravel folder structure
+
+### Tue 28, July 2020 *Bundler*
+I edited the Gemfile to match the versions used in the book, I learned how works ~> and >= for fetching the versions of gems, >= notation always installs the latest gem, whereas the ~> will install the number of version given 
+
+### Wed 29, July 2020 *rails server*
+I learned how to run script to run a server and see rails app, the server runs on localhost on port 3000, I also configured Cloud9 to allow connections to local webs server.
