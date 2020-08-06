@@ -19,6 +19,8 @@ I edited the Gemfile to match the versions used in the book, I learned how works
 ### Wed 29, July 2020 *rails server*
 I learned how to run script to run a server and see rails app, the server runs on localhost on port 3000, I also configured Cloud9 to allow connections to local webs server.
 
+## Week 2
+
 ### Thu 30, July 2020 *Model-View-Controller (MVC)*
 I learned how Rails use MVC architectural pattern, browser sends a request and controller handles it, then render view and sent to a the browser, the model interacts whit database.
 
@@ -32,3 +34,4 @@ I read about Git installation, configuration and basic commands like init, add, 
 I read the section 1.3.3 GitHub, I learned more about git branches and how is helpful for a single-developer, also learned the path to work with branches until merge
 
 ### Wed 05, August 2020 *Heroku setup and deployment*
+I had never used heroku, Heroku uses PostgreSQL database, is necessary to add this gem to Rails env and also modify the Gemfile, for deploying to heroku only run git push heroku master
