@@ -118,3 +118,72 @@ When we should test first:
 - Whenever a bug is found, write a test to reproduce it and protect against regressions, then write the application code to fix it.
 - Lean against writing tests for code (such as detailed HTML structure) likely to change in the future.
 - Write tests before refactoring code, focusing on testing error-prone code that’s especially likely to break.
+
+### Mon 24, August 2020 *6.1.1 Database migrations*
+A database consists of tables composed of data rows, where each row has columns of data attributes, the imporance of migrations is that provide a way to alter the structure of the data-base incrementally, so that our data model can adapt to changing requirements. Like in Laravel migrations are prefixed by a timestamp for example 20200903191338_create_users.rb, the migration consist of a "change" method that determines the change to be made to the database, then use a Rails method called create_table determiens a block, with the block variable t then the "t" object create columns in database, the final line of block has t.timestamps which is a special command thath creare something called "magic columns" (created_at, updated_at)
+
+### Tue 25, August 2020 *Models*
+The class inherits from ApplicationRecord class which inherits from ActiveRecord::Base, for this reason User or model can automatically has all functionality of ActiveRecord, for examples I used Rails console, in this chapter specify that Rails console automatically loads all Rails enviroment, wich includes the models so we can create objects, we can verify if object is valid using valid? method for example:
+```sh
+>> user = User.new(name:"Michael Hartl",email:"michael@example.com")
+>> user.valid?
+true
+```
+When a new object is created it assign nil values to id, created_at, updated_at and then when you made user.save this attributes change, the method User.create combine the new and save. the method create no return true or false, returns the object itself
+
+### Wed 26, August 2020 *inding user objects*
+Active Record provides several options for finding objects, the method find take as parameter the ID and raises an exceptions (ActiveRecord::RecordNotFound) if not exists, the method find_by allow to find objects by specific attributes:
+```sh
+>> user = User.new(name:"Michael Hartl",email:"michael@example.com")
+>> user.find_by(email:"michael@example.com")
+returns the object
+```
+Also exists copule of ways of finding users like first that just returns the first object in database.
+
+### Thu 27, August 2020 *Updating objects*
+Exits two ways to update an object, first is assign attributes indiviually then call the funcion save, this call is necessary to write the changes in the database, the second way to update is using multiple attributes with method update which accepts a hash of attributes and on success performs update and save in one step, if is updated then returns true, if we need to update only one attribute we can use update_attribute this method bypasses restrictions by skipping the validations.
+
+### Fri 28, August 2020 *Validations*
+The way for validating presense is using the argument presence: true, so the model be like
+class User < ApplicationRecord
+    validates :name, presence: true
+end
+validates is a method just parentheses are ommited,
+validates(:name, presence: true)
+
+Length validation
+We use the length with the maximum parameter to enforce the upper bound of text
+validates :name, presence: true, length: { maximum: 50 }
+validates :email, presence: true, length: { maximum: 255 }
+To validate email we use regula expression with option format:, the regex must look like:
+VALID_EMAIL_REGEX=/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+and the validations like:
+validates: email, format: { with: VALID_EMAIL_REGEX }
+
+### Mon 31, August 2020 *More validations*
+For login email must be unique, for this we use :uniqueness option in validates method
+validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: true
+For validate email address is necessary process as case-insensitive, for this we use case_sensitive: false
+validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
+
+### Tue 01, September 2020 *Passwords*
+The importance for use hash function to password is compare hashed values instead of raw passwords, we will be able to authenticate users without storing passwords so even if our database is compromised, our users passwords will still be secure, for this we implement a Rails method alled has_secure_password, wich is included in the User model, with this we adds the functionality to save a securely hashed password_digest attribute, attributes password and password_confirmation and an authenticate method that returns the user when the password is correct.
+
+### Wed 02, September 2020 *Password continuation*
+The requirement for has_secure_password to work is for the corresponding model to have an attribute called password_digest, so hashed password and password digest are synonyms, digest is a terminology of cryptographic hash functions, has_secure_password uses a hash function called bcrypt, applying this method with bcrypt we ensure that an attacker won't be able to log in to the site even if obtain a copy of the database, is necessary use bcrypt gem.
+
+### Thu 03, September 2020 *Password standars*
+It's important to aplly minimum standads on passwords to make them harder to guess, Rails by default enforce a minimum length of 6, to change this params es necessary to change validates method
+validates:password,presence:true,length: { minimum: 8 }
+has_secure_password includes a presence validation but allows user to create a password with 6 empty spaces for that reason es good to apply presence validation.
+
+### Fri 04, September 2020 *Rails environments*
+Rails has three environments: test, development and production, the default enviroment is development, we can use Rails.env.test? to verify enviroments, we can also run rails application in a different environment:
+rails server --envirnment production
+to follow REST principes,  resources are typically referenced using the resource name and unique identifier, also learned that find method cand convert params automatically to integer.
+
+### Mon 07, September 2020 *Debugger for rails application*
+In the previous section, I learn how to show debug information in pages, in this sections talks about gem byebug, byebug prompt in Rails server, to use only add line "debuger" before the line we want to analyze, to continue with execution press Ctrl-D and remove debugger line
+
+### Tue 08, September 2020 *Helpers*
+Methods defined in a helper are automatically available in any view, in this section I learned about the gem Gravar that allow us to upload images and associate them with an email address, Gravatar URLs are based on an MD5 hash of the user's email, to use MD5 hashing algorithm in Ruby is through the hex-digest method, which is part of the Digest library
